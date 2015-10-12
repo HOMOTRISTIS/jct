@@ -1,0 +1,43 @@
+AppBundle\Entity\ProductCategoryList:
+    type: entity
+    table: product_category_list
+    indexes:
+        category_id:
+            columns:
+                - category_id
+                - product_id
+        product_id:
+            columns:
+                - product_id
+        IDX_15BE9EAD12469DE2:
+            columns:
+                - category_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: true
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    manyToOne:
+        product:
+            targetEntity: Product
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                product_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        category:
+            targetEntity: ProductCategory
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

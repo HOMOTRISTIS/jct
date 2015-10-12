@@ -1,0 +1,35 @@
+services:
+
+    sonata.admin.productcategory:
+        class: AppBundle\Admin\ProductCategoryAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Main", label: "Product`s category" }
+        arguments:
+            - ~
+            - AppBundle\Entity\ProductCategory
+            - ~
+        calls:
+            - [ setTranslationDomain, [AppBundle]]
+
+    
+    sonata.admin.product:
+        class: AppBundle\Admin\ProductAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Main", label: "Products" }
+        arguments:
+            - ~
+            - AppBundle\Entity\Product
+            - ~
+        calls:
+            - [ setTranslationDomain, [AppBundle]]
+
+    sonata.admin.images:
+        class: AppBundle\Admin\ProductImageListAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Main", label: "Product`s images" }
+        arguments:
+            - ~
+            - AppBundle\Entity\ProductImageList
+            - ~
+        calls:
+            - [ setTranslationDomain, [AppBundle]]
