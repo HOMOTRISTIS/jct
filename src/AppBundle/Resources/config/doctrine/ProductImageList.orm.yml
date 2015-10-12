@@ -24,10 +24,12 @@ AppBundle\Entity\ProductImageList:
     manyToOne:
         product:
             targetEntity: Product
-            cascade: ["persist"]
+            cascade: ["persist","refresh"]
             inversedBy: images
             joinColumns:
                 product_id:
                     referencedColumnName: id
             orphanRemoval: true
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+      prePersist:   [ lifecycleFileUpload ]
+      preUpdate:    [ lifecycleFileUpload ]

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * ProductImageList
@@ -10,14 +11,107 @@ use Doctrine\ORM\Mapping as ORM;
 class ProductImageList
 {
 
-     
+          /**
+     * Unmapped property to handle file uploads
+     */
+    private $file;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $file
+     */
+    public function setFile(UploadedFile $file = null)
+    {
+        $this->file = $file;
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getFile()
+    {
+
+       
+        return $this->file;
+    }
+
+    /**
+     * Manages the copying of the file to the relevant place on the server
+     */
+    public function upload()
+    {
+
+    $path = $_SERVER['DOCUMENT_ROOT'].'/web/files/products';
+
    
+    if (file_exists($path )) {
+  
+    } else {
+
+        mkdir($path, 0700,true);
+     
+    }
+
+        // the file property can be empty if the field is not required
+
+        if (null === $this->getFile()) {
+            return;
+        }
+
+        $this->getFile()->move(
+            $path,
+            $this->getFile()->getClientOriginalName()
+        );
+    
+        // set the path property to the filename where you've saved the file    
+      
+
+        $this->src = $this->getFile()->getClientOriginalName();
+
+   
+        // clean up the file property as you won't need it anymore
+        $this->setFile(null);
+    }
+
+    /**
+     * Lifecycle callback to upload the file to the server
+     */
+    public function lifecycleFileUpload() { 
+             
+        $this->upload();
+    }
+
+    /**
+     * Updates the hash value to force the preUpdate and postUpdate events to fire
+     */
+    public function refreshUpdated() {
+
+       // $this->setUpdateDate(new \DateTime("now"));
+    }
+
+
+     public function getWebPath(){
+        if($this->getSrc()){
+        return '/web/files/products/'.$this->getSrc();
+        }else{
+         return NULL;   
+        }
+    }
+
+     
+     /**
+     * @var integer
+     */
+     protected $imagesProduct;
 
      /**
      * Set imagesProduct
      *
      * @param \AppBundle\Entity\Product $imagesProduct
-     * @return TestsItem
+     * @return imagesProduct
      */
     public function setImagesProduct(\AppBundle\Entity\Product $imagesProduct= null)
     {
@@ -36,8 +130,6 @@ class ProductImageList
     {
         return $this->imagesProduct;
     }
-
-
 
     /**
      * @var integer

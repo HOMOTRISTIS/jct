@@ -26,7 +26,7 @@ services:
     sonata.admin.images:
         class: AppBundle\Admin\ProductImageListAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Main", label: "Product`s images" }
+            - { name: sonata.admin, manager_type: orm, group: "Main", label: "Product`s images", show_in_dashboard: false }
         arguments:
             - ~
             - AppBundle\Entity\ProductImageList

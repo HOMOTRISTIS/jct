@@ -14,7 +14,6 @@ class Product
    
     private $images;
 
-
      /**
      *
      * @return \Doctrine\Common\Collections\Collection
@@ -45,7 +44,7 @@ class Product
     {
         $this->images[] = $image;
 
-        $image->setImagesProduct($this);     
+        $image->setProduct($this);     
     }
    
 
@@ -159,4 +158,13 @@ class Product
     {
         return $this->inStock;
     }
+
+    
+    public function __toString() {
+    return (string)$this->id;
+    }
+
+
+   
+
 }
