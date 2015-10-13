@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -12,6 +13,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Product
 {
    
+    protected $categories;
+
     private $images;
 
      /**
@@ -53,6 +56,7 @@ class Product
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->categories = new ArrayCollection();
        
     }
 
@@ -165,6 +169,25 @@ class Product
     }
 
 
+
+      public function getCategories()
+    {
+
+        return $this->categories;
+    }
+
+     /**
+     * Set company
+     *
+     * @param \AppBundle\Entity\ProductCategoryList $categories
+     * 
+     */
+    public function setCategories($categories)
+    {
+        $this->categories = $categories;
+
+        return $this->categories;
+    }
    
 
 }

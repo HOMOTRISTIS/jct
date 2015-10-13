@@ -34,5 +34,5 @@ AppBundle\Entity\Product:
             targetEntity: ProductImageList
             mappedBy: product
             cascade: ["persist"]
-            orphanRemoval: true 
+            orphanRemoval: true
     lifecycleCallbacks: {  }

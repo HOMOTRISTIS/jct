@@ -9,6 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ProductCategory
 {
+
+    private $categories;
+
+     /**
+     * @var integer
+     */
+    private $pid;
+
+
     /**
      * @var integer
      */
@@ -80,4 +89,70 @@ class ProductCategory
     {
         return $this->parent;
     }
+
+
+
+     /**
+     * {@inheritdoc}
+     */
+    public function setCategories($categories,$pid)
+    {
+
+        $categories = $categories->getCategories();
+            
+        global $kernel;
+
+        if ( 'AppCache' == get_class($kernel) )
+        {
+           $kernel = $kernel->getKernel();
+        }
+         $em = $kernel->getContainer()->get( 'doctrine.orm.entity_manager' );
+
+         $repo =  $em->getRepository('AppBundle:ProductCategoryList');
+
+         $product = $repo->findBy(array('product' => $pid->getId()));
+
+       if(!empty($product)){
+       foreach($product as $p){
+            $em->remove($p);
+            $em->flush();
+       } 
+        }
+
+                 
+        foreach ($categories as $category) {    
+            $this->addCategories($category,$pid);
+        }
+
+    }
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addCategories($category,$pid)
+    {
+      
+      $new_category_list_record = new \AppBundle\Entity\ProductCategoryList;
+
+      $new_category_list_record->setCategory($category);
+
+      $new_category_list_record->setProduct($pid);
+
+         global $kernel;
+
+        if ( 'AppCache' == get_class($kernel) )
+        {
+           $kernel = $kernel->getKernel();
+        }
+         $em = $kernel->getContainer()->get( 'doctrine.orm.entity_manager' );
+
+       if(is_object($new_category_list_record)){
+
+        $em->persist($new_category_list_record);
+
+        $em->flush();
+       }
+    }
+
 }

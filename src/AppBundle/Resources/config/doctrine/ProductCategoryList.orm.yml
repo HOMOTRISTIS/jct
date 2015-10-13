@@ -22,15 +22,6 @@ AppBundle\Entity\ProductCategoryList:
             generator:
                 strategy: IDENTITY
     manyToOne:
-        product:
-            targetEntity: Product
-            cascade: {  }
-            mappedBy: null
-            inversedBy: null
-            joinColumns:
-                product_id:
-                    referencedColumnName: id
-            orphanRemoval: false
         category:
             targetEntity: ProductCategory
             cascade: {  }
@@ -38,6 +29,15 @@ AppBundle\Entity\ProductCategoryList:
             inversedBy: null
             joinColumns:
                 category_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        product:
+            targetEntity: Product
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                product_id:
                     referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }

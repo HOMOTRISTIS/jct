@@ -20,11 +20,49 @@ class ProductAdmin extends Admin
     {
 
 
-       
-            
-        $formMapper         
+        
+         
+        $p = $this->getSubject();
+
+        global $kernel;
+
+        if ( 'AppCache' == get_class($kernel) )
+        {
+           $kernel = $kernel->getKernel();
+        }
+         $em = $kernel->getContainer()->get( 'doctrine.orm.entity_manager' );
+
+         $repo_product = $em->getRepository('AppBundle:ProductCategoryList');
+
+         $product_cats = $repo_product->findBy(array('product' => $p->getId()));      
+
+         $cats_array = array();
+
+         foreach($product_cats as $p){
+           $cats_array[]=$p->getCategory()->getId();  
+         }    
+
+         $repo =  $em->getRepository('AppBundle:ProductCategory');
+
+         $product = $repo->findById($cats_array);
+
+         $sumarr = array();
+
+         if(!empty($product)){
+          foreach($product as $p){
+           
+           
+           
+                $sumarr[] =  $p;   
+           } 
+          }
+
+
+           $sumarr['property']='title';
+
+           $formMapper         
             ->add('title',null,array('label' => 'Title'))
-            ->add('price',null,array('label' => 'Cost'))
+            ->add('price',null,array('label' => 'Cost','required'=>true))
             ->add('images', 'sonata_type_collection',
                     array(
                     'cascade_validation' => false,
@@ -34,15 +72,16 @@ class ProductAdmin extends Admin
                     'edit' => 'inline',
                     'inline' => 'table')
                 )
-           /* ->add('categories', 'entity',  array(          
-            'class' => 'Froid\OwnerBundle\Entity\ProductCategory',
-            'property' => 'titleRu',
+          
+            ->add('categories', 'entity',  array(          
+            'class' => 'AppBundle\Entity\ProductCategory',
+            'property' => 'title',
             'multiple' => true,
-            'label'=>'Категории', 
+            'label'=>'Categories', 
             'required'=>TRUE,    
-           // 'expanded'=>true,     
-           'data'=>array($productnew1,$productnew2,$productnew3,$productnew4,$productnew5,'property' => 'titleRu') 
-            ))*/
+            'expanded'=>true,     
+            'data'=>$sumarr
+            ))
             
             
            ;
@@ -102,6 +141,26 @@ class ProductAdmin extends Admin
             
     }
 
-   
+      public function postPersist($p)
+    {
+
+           if(!empty($p->getId())){
+           $category_inctance = new \AppBundle\Entity\ProductCategory;
+           $category_inctance->setCategories($p,$p);
+           }
+         
+
+    }
+    
+     public function postUpdate($p)
+    {
+
+           if(!empty($p->getId())){
+           $category_inctance = new \AppBundle\Entity\ProductCategory;
+           $category_inctance->setCategories($p,$p);
+          }
+         
+
+    }
 
 }
