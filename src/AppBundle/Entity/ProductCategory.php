@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * ProductCategory
  */
+
 class ProductCategory
 {
 
@@ -113,12 +114,11 @@ class ProductCategory
          $product = $repo->findBy(array('product' => $pid->getId()));
 
        if(!empty($product)){
-       foreach($product as $p){
-            $em->remove($p);
-            $em->flush();
-       } 
+           foreach($product as $p){
+                $em->remove($p);
+                $em->flush();
+           } 
         }
-
                  
         foreach ($categories as $category) {    
             $this->addCategories($category,$pid);

@@ -13,56 +13,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Product
 {
    
-    protected $categories;
-
-    private $images;
-
-     /**
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setImages($images)
-    {
-        $this->images = new ArrayCollection();
-
-        foreach ($images as $image) {
-            $this->addImages($image);
-        }
-    }
-
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addImages(\AppBundle\Entity\ProductImageList $image)
-    {
-        $this->images[] = $image;
-
-        $image->setProduct($this);     
-    }
-   
-
-
-
-    public function __construct()
-    {
-        $this->images = new ArrayCollection();
-        $this->categories = new ArrayCollection();
-       
-    }
-
-
-
-
     /**
      * @var integer
      */
@@ -82,6 +32,24 @@ class Product
      * @var integer
      */
     private $inStock;
+
+    /**
+     * @var integer
+     */
+    private $discount;
+
+
+     protected $categories;
+
+     private $images;
+
+
+     public function __construct()
+    {
+        $this->images = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+       
+    }
 
 
     /**
@@ -189,5 +157,63 @@ class Product
         return $this->categories;
     }
    
+
+
+     /**
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getImages()
+    {
+        return $this->images;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setImages($images)
+    {
+        $this->images = new ArrayCollection();
+
+        foreach ($images as $image) {
+            $this->addImages($image);
+        }
+    }
+
+
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addImages(\AppBundle\Entity\ProductImageList $image)
+    {
+        $this->images[] = $image;
+
+        $image->setProduct($this);     
+    }
+   
+
+    /**
+     * Set discount
+     *
+     * @param \AppBundle\Entity\ProductDiscountGroup $company
+     * @return discount
+     */
+    public function setDiscount(\AppBundle\Entity\ProductDiscountGroup $discount = null)
+    {
+        $this->discount = $discount;
+
+        return $this;
+    }
+
+    /**
+     * Get discount
+     *
+     * @return \AppBundle\Entity\ProductDiscountGroup
+     */
+    public function getDiscount()
+    {
+        return $this->discount;
+    }
 
 }

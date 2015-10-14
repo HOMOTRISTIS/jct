@@ -18,10 +18,7 @@ class ProductAdmin extends Admin
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
-
-
-        
-         
+       
         $p = $this->getSubject();
 
         global $kernel;
@@ -50,19 +47,22 @@ class ProductAdmin extends Admin
 
          if(!empty($product)){
           foreach($product as $p){
-           
-           
-           
                 $sumarr[] =  $p;   
            } 
           }
-
 
            $sumarr['property']='title';
 
            $formMapper         
             ->add('title',null,array('label' => 'Title'))
             ->add('price',null,array('label' => 'Cost','required'=>true))
+            ->add('inStock',null,array('label' => 'In stock','required'=>true))
+            ->add('discount', 'entity',  array(
+            'class' => 'AppBundle\Entity\ProductDiscountGroup',
+            'property' => 'title',
+             'required'=>false,
+             'label'=>'Discount group'
+            ))
             ->add('images', 'sonata_type_collection',
                     array(
                     'cascade_validation' => false,
@@ -89,14 +89,12 @@ class ProductAdmin extends Admin
    
    
        public function preUpdate($product)
-        {  
-     
+        {    
                     foreach ($product->getImages() as $t) {
                         $t->setImagesProduct($product); 
                         $t->setProduct($product);      
                         $t->lifecycleFileUpload();
                        }
-
 
         }
 
@@ -127,6 +125,7 @@ class ProductAdmin extends Admin
     {
         $datagridMapper
            ->add('title',null,array('label' => 'Title'))
+           ->add('price',null, array('label' => 'Cost'))
           
           ;
     }
@@ -136,6 +135,7 @@ class ProductAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('title',null,array('label' => 'Title'))
+            ->add('price',null, array('label' => 'Cost'))
         ;
 
             

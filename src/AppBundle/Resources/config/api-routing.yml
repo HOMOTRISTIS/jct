@@ -1,0 +1,4 @@
+﻿blog_api_products:
+    type: rest
+    resource: "@AppBundle/Controller/ProductsController.php"
+    name_prefix:  api_products_

@@ -25,7 +25,9 @@
         "knplabs/gaufrette": "dev-master",
         "sonata-project/block-bundle": "2.2.9",
         "sonata-project/doctrine-orm-admin-bundle": "2.2.6",
-        "sonata-project/admin-bundle": "~2.3"
+        "sonata-project/admin-bundle": "~2.3",
+        "friendsofsymfony/rest-bundle": "~1.7",
+        "jms/serializer-bundle": "~1.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

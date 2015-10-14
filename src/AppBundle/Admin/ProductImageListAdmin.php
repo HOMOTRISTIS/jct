@@ -17,45 +17,28 @@ class ProductImageListAdmin extends Admin
     {
         // get the current Image instance
         $image = $this->getSubject();
-
-
-
         // use $fileFieldOptions so we can add other options to the field
-        $fileFieldOptions = array('required' => false,'by_reference' => false, 'data_class' => 'Symfony\Component\HttpFoundation\File\UploadedFile');
-
-       
+        $fileFieldOptions = array('required' => true,'by_reference' => false, 
+        'data_class' => 'Symfony\Component\HttpFoundation\File\UploadedFile');
 
         if ($image && ($webPath = $image->getWebPath()) ) {
-              
-
-            if($webPath!==null){
-                
+            if($webPath!==null){          
             // get the container so the full path to the image can be set
            if($_SERVER['SERVER_NAME']=='localhost'){
-               $fullPath = 'http://localhost:25759'.$webPath;
+               $fullPath = $_SERVER["HTTP_HOST"].$webPath;
            }else{
                $fullPath = $_SERVER['SERVER_NAME'].$webPath;
            }  
             // add a 'help' option containing the preview's img tag
-
            $fileFieldOptions['sonata_help'] = '<img width="100px" src="'.$webPath.'" class="admin-preview" />';
           
             }
         }
     
         $formMapper
-            //->add('src',null,array('label' => 'Source','required'=>false,'disabled'=>'disabled'))
-            //->add('src', 'image', array('prefix'=>'/','label' => 'Source','required'=>false,'disabled'=>'disabled'))
-             
-              
             ->add('imagesProduct','hidden',array('attr'=>array("hidden" => true)))
             ->add('file','file', $fileFieldOptions)
-            /*
-            ->add('product', 'entity',  array(
-            'class' => 'AppBundle\Entity\Product',
-            'property' => 'id',
-            'required'=>false
-            ))*/
+           
            ;
     }
 
@@ -64,7 +47,6 @@ class ProductImageListAdmin extends Admin
     {
         $datagridMapper
            ->add('src',null,array('label' => 'Title'))
-    
           ;
     }
 
@@ -78,19 +60,14 @@ class ProductImageListAdmin extends Admin
     }
 
      function preRemove($image){
-           
-
         $image = $this->getSubject();
-
          if ($image && ($webPath = $image->getWebPath())) {
-       if($webPath!==null){
-               $fullPath = $_SERVER['DOCUMENT_ROOT'].$webPath;
-            @unlink($fullPath);
-        }
+           if($webPath!==null){
+                   $fullPath = $_SERVER['DOCUMENT_ROOT'].$webPath;
+                @unlink($fullPath);
+            }
          }
-
-       
-        }
+     }
 
     
 

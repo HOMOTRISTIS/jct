@@ -7,6 +7,8 @@ imports:
 
 framework:
     #esi:             ~
+    serializer:
+        enabled: true
     translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
@@ -89,3 +91,13 @@ sonata_admin:
             -
                 position: left
                 type: sonata.admin.block.admin_list
+
+fos_rest:
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+    format_listener:
+        rules:
+            - { path: '^/api', priorities: ['json', 'html'], fallback_format: html, prefer_extension: true }
+            - { path: '^/', priorities: [ 'html', '*/*'], fallback_format: ~, prefer_extension: true }

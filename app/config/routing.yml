@@ -10,3 +10,8 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+
+mvms_api:
+    type:     rest
+    prefix:   /api
+    resource: "@AppBundle/Resources/config/api-routing.yml"

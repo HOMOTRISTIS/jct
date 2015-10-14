@@ -35,4 +35,14 @@ AppBundle\Entity\Product:
             mappedBy: product
             cascade: ["persist"]
             orphanRemoval: true
+    manyToOne:
+        discount:
+            targetEntity: ProductDiscountGroup
+            cascade: {  }
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                discount_id:
+                    referencedColumnName: id
+            orphanRemoval: false
     lifecycleCallbacks: {  }

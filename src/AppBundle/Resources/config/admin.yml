@@ -34,4 +34,15 @@ services:
         calls:
             - [ setTranslationDomain, [AppBundle]]
 
+    sonata.admin.disconts:
+        class: AppBundle\Admin\ProductDiscountGroupAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Main", label: "Product`s discount groups", show_in_dashboard: true }
+        arguments:
+            - ~
+            - AppBundle\Entity\ProductDiscountGroup
+            - ~
+        calls:
+            - [ setTranslationDomain, [AppBundle]]
+
      
