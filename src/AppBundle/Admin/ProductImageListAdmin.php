@@ -18,7 +18,7 @@ class ProductImageListAdmin extends Admin
         // get the current Image instance
         $image = $this->getSubject();
         // use $fileFieldOptions so we can add other options to the field
-        $fileFieldOptions = array('required' => true,'by_reference' => false, 
+        $fileFieldOptions = array('required' => false,'by_reference' => false, 
         'data_class' => 'Symfony\Component\HttpFoundation\File\UploadedFile');
 
         if ($image && ($webPath = $image->getWebPath()) ) {

@@ -85,7 +85,7 @@ sonata_block:
             contexts:   [admin]
 
 sonata_admin:
-    title:      Admin Panel
+    title:      JustCoded Test
     dashboard:
         blocks:
             -
