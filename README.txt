@@ -5,5 +5,7 @@
 4) to configure bd in /app/config/parameters.yml
 5) may be to configure .htaccess
 6) run  /admin/dashboard
+7) REST answer by link /api/products/{product.id}.json
 
 * - on remote server  http://web.ionov.in.ua/admin/dashboard
+
